@@ -6,8 +6,5 @@ to get some
 funn......
 
 hello
-demo test
-run
-
 PART 2
 COMMIT + PLAN ASSOCIATION
