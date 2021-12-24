@@ -1,0 +1,17 @@
+steps:
+- task: Maven@3
+  displayName: 'Maven pom.xml'
+  pool:
+  name: Azure Pipelines
+steps:
+- bash: 
+  displayName: 'Bash Script'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results **/TEST-*.xml'
+pool: server
+steps:
+- task: ServiceNow.vss-services-servicenow-devops.serviceNowDevOps-server-change-acceleration-task.ServiceNow-DevOps-Server-Change-Acceleration@1
+  displayName: 'ServiceNow DevOps Server Change Acceleration'
+  inputs:
+    connectedServiceName: empdsingh2
