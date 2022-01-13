@@ -49,7 +49,7 @@ stages:
                   echo 'Hello world'
             - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
               inputs:
-                connectedServiceName: 'emppsinha3-PratikProject1-Generic Connection'
+                connectedServiceName: 'emppsinha3-PratikProject1-ServiceNow DevOps Service Connection'
                 artifactsPayload: |
                   {
                       "artifacts": [
