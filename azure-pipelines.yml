@@ -1,35 +1,74 @@
 # Maven
-
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
-- master
-
+ - none
 pool:
-  vmImage: ubuntu-latest
-
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-    
-- task: InvokeRESTAPI@1
-  inputs:
-    connectionType: 'connectedServiceName'
-    method: 'POST'
-    body: |
-      {
-                              "buildNumber": "$(build.buildId)",
-                              "isMultiBranch": "true",
-                              "branchName": "$(build.sourceBranchName)"
-                              }
-    waitForCompletion: 'false'
+  vmImage: 'ubuntu-latest'
+stages:
+    - stage: S1
+      jobs:
+          - job: 'Job'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world.'
+    - stage: S2
+      jobs:
+          - job: 'Job'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world'
+            - task: PublishTestResults@2
+              inputs:
+                testResultsFormat: 'JUnit'
+                testResultsFiles: '**/TEST-*.xml'
+                testRunTitle: 'Job'
+            - task: PublishTestResults@2
+              inputs:
+                testResultsFormat: 'JUnit'
+                testResultsFiles: '**/TEST-*.xml'
+                testRunTitle: 'Job'
+    - stage: S3
+      jobs:
+          - job: 'Job'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world'
+            - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
+              inputs:
+                connectedServiceName: 'emppsinha3-PratikProject1-Generic Connection'
+                artifactsPayload: |
+                  {
+                      "artifacts": [
+                        {
+                            "name": "msnautomation-agent-registration-artifact.jar",
+                            "version": "1.$(Build.BuildId)",
+                            "semanticVersion": "1.$(Build.BuildId).0",
+                            "repositoryName": "MSNAutomation"
+                        }
+                      ]
+                  }            
+    - stage: S4
+      jobs:
+          - job: 'Job'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world'
+                  # Maven
