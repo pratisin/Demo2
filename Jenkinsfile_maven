@@ -6,22 +6,27 @@ pipeline {
     stages {
         stage("Build") {
             steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 echo "Building..."
                 snDevOpsStep()
                 sh 'mvn clean install'
+                }
             }
         }
         stage("Test") {
             steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sleep 5
                 echo "Testing..."
                 snDevOpsStep()
                 sh "mvn test -Dpublish"
                junit "**/target/surefire-reports/*.xml"
+               }
             }
         }
         stage("Deploy") {
             steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             {
                 sleep 5
                 echo "Deploying.."
@@ -35,10 +40,12 @@ pipeline {
                 sleep 5
                 snDevOpsChange()
                 }
+                }
             }
         }
         stage("Prod") {
             steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             {
                 sleep 5
                 echo "Prod deploy..."
@@ -51,6 +58,7 @@ pipeline {
                     {"name": "demo5.jar","version": "1.0","semanticVersion": "1.1.0","repositoryName": "demo5"}]}""")
                 sleep 5
                 snDevOpsChange()
+                }
                 }
             }
         }
