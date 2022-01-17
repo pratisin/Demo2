@@ -54,7 +54,7 @@ stages:
                   {
                       "artifacts": [
                         {
-                            "name": "msnautomation-agent-registration-artifact-$(Build.BuildId).jar",
+                            "name": "msnautomation-agent-registration-artifact.jar",
                             "version": "1.$(Build.BuildId)",
                             "semanticVersion": "1.$(Build.BuildId).0",
                             "repositoryName": "MSNAutomation"
