@@ -21,22 +21,17 @@ stages:
       jobs:
           - job: 'Job'
             steps:
-            - task: Bash@3
+            - task: Maven@3
               inputs:
-                targetType: 'inline'
-                script: |
-                  # Write your commands here                  
-                  echo 'Hello world'
-            - task: PublishTestResults@2
-              inputs:
-                testResultsFormat: 'JUnit'
-                testResultsFiles: '**/TEST-*.xml'
-                testRunTitle: 'Job'
-            - task: PublishTestResults@2
-              inputs:
-                testResultsFormat: 'JUnit'
-                testResultsFiles: '**/TEST-*.xml'
-                testRunTitle: 'Job'
+                mavenPomFile: 'pom.xml'
+                publishJUnitResults: true
+                testResultsFiles: '**/surefire-reports/TEST-*.xml'
+                javaHomeOption: 'JDKVersion'
+                mavenVersionOption: 'Default'
+                mavenAuthenticateFeed: false
+                effectivePomSkip: false
+                sonarQubeRunAnalysis: false
+
     - stage: S3
       jobs:
           - job: 'Job'
@@ -72,8 +67,3 @@ stages:
                   # Write your commands here                  
                   echo 'Hello world'
                   # Maven
-            - task: PublishTestResults@2
-              inputs:
-                testResultsFormat: 'JUnit'
-                testResultsFiles: '**/TEST-*.xml'
-                testRunTitle: 'Publish_TestResults'
