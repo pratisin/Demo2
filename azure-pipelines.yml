@@ -44,7 +44,7 @@ stages:
                   echo 'Hello world'
             - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
               inputs:
-                connectedServiceName: 'emppsinha3-PratikProject1-ServiceNow DevOps Service Connection'
+                connectedServiceName: 'pratikromenightly-PratikProject1-ServiceNow DevOps Service Connection'
                 artifactsPayload: |
                   {
                       "artifacts": [
@@ -55,7 +55,7 @@ stages:
                             "repositoryName": "MSNAutomation"
                         }
                       ]
-                  }            
+                  }
     - stage: S4
       jobs:
           - job: 'Job'
